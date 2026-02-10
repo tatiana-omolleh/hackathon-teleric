@@ -15,6 +15,8 @@ interface ProfilePanelProps {
   onProfileChange: (profile: UserProfile) => void;
   isOpen: boolean;
   onToggle: () => void;
+  onDigest: () => void;
+  isDigesting: boolean;
 }
 
 export default function ProfilePanel({
@@ -22,6 +24,8 @@ export default function ProfilePanel({
   onProfileChange,
   isOpen,
   onToggle,
+  onDigest,
+  isDigesting,
 }: ProfilePanelProps) {
   const [newSkill, setNewSkill] = useState("");
 
@@ -73,9 +77,31 @@ export default function ProfilePanel({
               Your Profile
             </h2>
           </div>
-          <p className="text-xs" style={{ color: "var(--color-muted-foreground)" }}>
+          <p className="text-xs mb-3" style={{ color: "var(--color-muted-foreground)" }}>
             Build your learning profile
           </p>
+          
+          <button
+            onClick={onDigest}
+            disabled={isDigesting}
+            className="w-full py-2 px-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all hover:opacity-90 disabled:opacity-50"
+             style={{
+              backgroundColor: "var(--color-primary)",
+              color: "var(--color-primary-foreground)",
+            }}
+          >
+            {isDigesting ? (
+                <>
+                <Sparkles className="w-3 h-3 animate-spin"/>
+                Digesting...
+                </>
+            ) : (
+                <>
+                <Sparkles className="w-3 h-3"/>
+                Digest & Analyze CV
+                </>
+            )}
+          </button>
         </div>
 
         <div className="flex-1 overflow-y-auto p-5 space-y-6">

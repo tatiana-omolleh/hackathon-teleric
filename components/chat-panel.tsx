@@ -11,10 +11,10 @@ interface Message {
 
 interface ChatPanelProps {
   profile: UserProfile;
-  onSpeakingChange: (isSpeaking: boolean) => void;
+  speak: (text: string) => void;
 }
 
-export default function ChatPanel({ profile, onSpeakingChange }: ChatPanelProps) {
+export default function ChatPanel({ profile, speak }: ChatPanelProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
@@ -39,17 +39,17 @@ export default function ChatPanel({ profile, onSpeakingChange }: ChatPanelProps)
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
-    onSpeakingChange(true);
 
     // Simulate AI response (replace with actual API call)
     setTimeout(() => {
+      const responseText = `Great question! Based on your profile (${profile.skills.join(", ") || "no skills yet"}), here's what I recommend...`;
       const aiResponse: Message = {
         role: "assistant",
-        content: `Great question! Based on your profile (${profile.skills.join(", ") || "no skills yet"}), here's what I recommend...`,
+        content: responseText,
       };
       setMessages((prev) => [...prev, aiResponse]);
       setIsLoading(false);
-      onSpeakingChange(false);
+      speak(responseText);
     }, 1500);
   };
 

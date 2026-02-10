@@ -6,6 +6,7 @@ import ChatPanel from "@/components/chat-panel";
 import ProfilePanel, { type UserProfile } from "@/components/profile-panel";
 import SuggestedCourses from "@/components/suggested-courses";
 import { Brain } from "lucide-react";
+import { useSpeech } from "@/hooks/use-speech";
 
 const AgentAvatar = dynamic(() => import("@/components/agent-avatar"), {
   ssr: false,
@@ -23,8 +24,18 @@ export default function Page() {
     goals: "",
     linkedinSummary: "",
   });
-  const [isSpeaking, setIsSpeaking] = useState(false);
+  const { isSpeaking, speak } = useSpeech();
+  const [isDigesting, setIsDigesting] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(true);
+
+  const handleDigest = () => {
+    setIsDigesting(true);
+    // Simulate processing time
+    speak("Analysing your profile and experience. Generating personalized recommendations.");
+    setTimeout(() => {
+        setIsDigesting(false);
+    }, 4000);
+  };
 
   return (
     <main className="min-h-screen" style={{ backgroundColor: 'var(--color-background)' }}>
@@ -63,18 +74,20 @@ export default function Page() {
             onProfileChange={setProfile}
             isOpen={isProfileOpen}
             onToggle={() => setIsProfileOpen(!isProfileOpen)}
+            onDigest={handleDigest}
+            isDigesting={isDigesting}
           />
 
           {/* Center: Chat */}
           <div className="flex-1 flex flex-col min-w-0 border-t lg:border-t-0" style={{ borderColor: 'var(--color-border)' }}>
-            <ChatPanel profile={profile} onSpeakingChange={setIsSpeaking} />
+            <ChatPanel profile={profile} speak={speak} />
           </div>
 
           {/* Right: 3D Avatar + Courses */}
           <aside className="hidden xl:flex flex-col w-96 border-l" style={{ borderColor: 'var(--color-border)' }}>
             {/* 3D Avatar */}
             <div className={`h-72 shrink-0 relative ${isSpeaking ? "animate-pulse-glow" : ""}`}>
-              <AgentAvatar isSpeaking={isSpeaking} />
+              <AgentAvatar isSpeaking={isSpeaking} isDigesting={isDigesting} />
               {isSpeaking && (
                 <div className="absolute bottom-3 left-1/2 -translate-x-1/2">
                   <div className="flex items-center gap-1 px-3 py-1 rounded-full border"
@@ -113,7 +126,7 @@ export default function Page() {
                     MentorAI Agent
                   </p>
                   <p className="text-[10px]" style={{ color: 'var(--color-muted-foreground)' }}>
-                    {isSpeaking ? "Speaking to you..." : "Ready to help"}
+                    {isDigesting ? "Digesting information..." : isSpeaking ? "Speaking to you..." : "Ready to help"}
                   </p>
                 </div>
               </div>
