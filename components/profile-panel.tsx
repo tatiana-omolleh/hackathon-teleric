@@ -304,11 +304,11 @@ export default function ProfilePanel({
 
             {/* Suggested Skills */}
             <details className="group">
-              <summary className="text-xs font-medium cursor-pointer list-none flex items-center gap-1" style={{ color: "var(--color-primary)" }}>
+              <summary className="text-sm font-semibold cursor-pointer list-none flex items-center gap-2" style={{ color: "var(--color-primary)" }}>
                 <span>Browse recognized skills</span>
-                <ChevronLeft className="w-3 h-3 transition-transform group-open:rotate-[-90deg]" />
+                <ChevronLeft className="w-4 h-4 transition-transform group-open:rotate-[-90deg]" />
               </summary>
-              <div className="mt-3 p-3 rounded-xl border max-h-40 overflow-y-auto scrollbar-thin" style={{ borderColor: "var(--color-border)", backgroundColor: "var(--color-card)" }}>
+              <div className="mt-4 p-4 rounded-xl border max-h-52 overflow-y-auto scrollbar-thin" style={{ borderColor: "var(--color-border)", backgroundColor: "var(--color-card)" }}>
                 <div className="flex flex-wrap gap-1.5">
                   {RECOGNIZED_SKILLS.filter(s => !profile.skills.includes(s)).slice(0, 30).map((skill) => (
                     <button
@@ -319,7 +319,7 @@ export default function ProfilePanel({
                           skills: [...profile.skills, skill],
                         });
                       }}
-                      className="px-2 py-1 text-xs rounded-md border transition-all hover:scale-105 cursor-pointer"
+                      className="px-3 py-1.5 text-xs rounded-lg border transition-all hover:scale-105 cursor-pointer"
                       style={{
                         backgroundColor: "rgba(139, 92, 246, 0.05)",
                         borderColor: "rgba(139, 92, 246, 0.15)",
