@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import ChatPanel from "@/components/chat-panel";
 import ProfilePanel, { type UserProfile } from "@/components/profile-panel";
-import SuggestedCourses from "@/components/suggested-courses";
+import LearningPath from "@/components/learning-path";
 import { Brain } from "lucide-react";
 import { useSpeech } from "@/hooks/use-speech";
 
@@ -134,9 +134,9 @@ export default function Page() {
               </div>
             </div>
 
-            {/* Suggested Courses */}
+            {/* Learning Path */}
             <div className="flex-1 overflow-y-auto scrollbar-thin p-6 border-t" style={{ borderColor: 'var(--color-border)' }}>
-              <SuggestedCourses />
+              <LearningPath />
             </div>
           </aside>
         </div>
