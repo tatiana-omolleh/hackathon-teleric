@@ -51,7 +51,7 @@ export default function IntroducePage() {
         clearInterval(interval);
         setTimeout(() => {
           setStep("redirecting");
-          router.push("/");
+          router.push("/courses");
         }, 800);
       }
       setProgress(currentProgress);
