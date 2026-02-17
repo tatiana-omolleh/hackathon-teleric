@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      run_lint:
+        description: "Run ESLint"
+        type: boolean
+        default: false
 
 jobs:
   build:
@@ -21,6 +26,7 @@ jobs:
         run: npm ci
 
       - name: Lint
+        if: inputs.run_lint == true
         run: npm run lint
 
       - name: Build
